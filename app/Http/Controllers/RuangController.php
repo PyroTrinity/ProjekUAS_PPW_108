@@ -20,10 +20,17 @@ class RuangController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['nama' => 'required']);
-        Ruang::create($request->all());
-        return redirect()->route('ruang.index');
+        $request->validate([
+            'nama' => 'required|string|max:255',
+        ]);
+
+        Ruang::create([
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('ruang.index')->with('success', 'Ruangan berhasil ditambahkan.');
     }
+
 
     public function edit(Ruang $ruang)
     {
@@ -43,4 +50,3 @@ class RuangController extends Controller
         return back();
     }
 }
-
